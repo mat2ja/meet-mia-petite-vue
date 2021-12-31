@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meet Mia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=BioRhyme:wght@400;700;800&family=Dosis:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/petite-vue?module';
+
+      createApp({
+        // exposed to all expressions
+        isDesktop: true,
+        navDrawerOpen: false,
+        navItemsDesktopLeft: [
+          {
+            label: 'Ponuda',
+            href: 'ponuda.html',
+            icon: null,
+          },
+          {
+            label: 'O nama',
+            href: 'o-nama.html',
+            icon: null,
+          },
+          {
+            label: 'Blog',
+            href: 'blog.html',
+            icon: null,
+          },
+        ],
+        navItemsDesktopRight: [
+          {
+            label: 'Kontakt',
+            href: 'kontakt.html',
+            icon: null,
+          },
+          {
+            label: 'Košarica',
+            href: 'košarica.html',
+            icon: null,
+          },
+          {
+            label: 'Profil',
+            href: 'profil.html',
+            icon: null,
+          },
+        ],
+        navDrawerItems: [
+          {
+            label: 'Ponuda',
+            href: 'ponuda.html',
+            icon: null,
+          },
+          {
+            label: 'O nama',
+            href: 'o-nama.html',
+            icon: null,
+          },
+          {
+            label: 'Blog',
+            href: 'blog.html',
+            icon: null,
+          },
+          {
+            label: 'Kontakt',
+            href: 'kontakt.html',
+            icon: null,
+          },
+        ],
+        // getters
+        get plusOne() {
+          return this.count + 1;
+        },
+        // methods
+        increment() {
+          this.count++;
+        },
+        openNavDrawer() {
+          this.navDrawerOpen = true;
+        },
+        closeNavDrawer() {
+          this.navDrawerOpen = false;
+        },
+      }).mount();
+    </script>
+  </head>
+  <body @resize.window="console.log" :class="{'no-scrollbar': navDrawerOpen}">
+    <div class="container header__wrapper">
+      <div class="row">
+        <header class="header">
+          <div
+            class="header__hamburger tablet icon__wrapper left"
+            @click="openNavDrawer"
+          >
+            <box-icon class="icon" size="md" name="menu-alt-left"></box-icon>
+          </div>
+          <div class="header__logo">
+            <img
+              src="./assets/images/logo.png"
+              alt="Logo"
+              class="header__logo--img"
+            />
+          </div>
+          <nav class="nav desktop">
+            <ul class="nav__list nav__list--left">
+              <li
+                class="nav__item"
+                v-for="(item, i) in navItemsDesktopLeft"
+                :key="i"
+              >
+                <a :href="item.href" class="nav__link">{{item.label}}</a>
+              </li>
+            </ul>
+            <ul class="nav__list nav__list--right">
+              <li
+                class="nav__item"
+                v-for="(item, i) in navItemsDesktopRight"
+                :key="i"
+              >
+                <a :href="item.href" class="nav__link">{{item.label}}</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="header__hamburger tablet icon__wrapper right">
+            <a href="/kosarica" class="nav-link-mobile icon__link">
+              <box-icon class="icon" size="md" name="cart-alt"></box-icon>
+            </a>
+          </div>
+
+          <div class="nav-drawer tablet container" v-if="navDrawerOpen">
+            <header class="nav-drawer__header">
+              <div class="icon__wrapper left" @click="closeNavDrawer">
+                <box-icon class="icon" size="md" name="x"></box-icon>
+              </div>
+              <div class="header__logo">
+                <img
+                  src="./assets/images/logo.png"
+                  alt="Logo"
+                  class="header__logo--img"
+                />
+              </div>
+              <div class="header__hamburger tablet icon__wrapper right">
+                <a href="/kosarica" class="nav-link-mobile icon__link">
+                  <box-icon class="icon" size="md" name="cart-alt"></box-icon>
+                </a>
+              </div>
+            </header>
+            <nav class="nav-drawer__nav">
+              <ul class="nav-drawer__list">
+                <li
+                  class="nav-drawer__item"
+                  v-for="(item, i) in navDrawerItems"
+                  :key="i"
+                >
+                  <a class="nav-drawer__link" :href="item.href"
+                    >{{item.label}}</a
+                  >
+                </li>
+              </ul>
+              <div class="nav-drawer__user">
+                <a
+                  href="/profil"
+                  class="nav-link nav-link-mobile"
+                  aria-label="Location"
+                >
+                  <box-icon
+                    class="icon"
+                    size="lg"
+                    name="user-circle"
+                    type="solid"
+                  ></box-icon>
+                  Matija Osrečki
+                </a>
+              </div>
+            </nav>
+          </div>
+        </header>
+      </div>
+    </div>
+    <main class="container main">
+      <div class="row">
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad suscipit
+          repellat incidunt porro minima autem? Eos veritatis voluptas debitis
+          dignissimos quasi sint optio, ipsam impedit nisi, laborum eveniet
+          minima labore. Voluptatibus a animi nihil placeat! Deserunt tenetur
+          tempora consectetur sequi quo consequatur quos quibusdam accusamus.
+          Repudiandae quidem cumque ea vero nostrum non, veritatis officiis rem
+          asperiores quas, animi laudantium aspernatur? Minima maiores excepturi
+          nemo voluptatem recusandae nesciunt exercitationem iusto iste enim ut
+          fugiat, quibusdam reprehenderit ipsa ullam eligendi maxime magnam
+          eveniet Eligendi quas porro voluptatum sequi? Vero ea aperiam minima
+          sequi in sapiente provident quaerat, quibusdam corporis quos quod
+          accusantium eligendi tempore nesciunt explicabo necessitatibus
+          voluptatem culpa asperiores suscipit aspernatur alias! Perspiciatis
+          deleniti repellat molestiae numquam amet. Consequatur, delectus nulla.
+          Quam sed autem enim praesentium! Tempore eveniet quis rem possimus
+          repellendus labore, voluptatibus molestias accusantium perferendis
+          aspernatur temporibus odio neque sed. Neque expedita praesentium quo
+          facilis porro cumque unde blanditiis nihil sapiente totam! Soluta
+          assumenda recusandae, placeat, eligendi tenetur tempora odit nemo et
+          tempore ipsam consectetur asperiores nulla dolores quisquam!
+          Exercitationem! Eum, necessitatibus voluptatibus repellat at impedit,
+          nemo molestiae inventore maxime quasi, minus debitis repudiandae
+          tenetur. Dolor quas perferendis, ullam, nesciunt sit, dolore
+          perspiciatis voluptate officiis hic nemo vel laudantium explicabo!
+          Cupiditate neque nisi quidem, tempore eaque quia a odit illum quaerat
+          porro, commodi beatae rem corrupti, quo asperiores unde eius
+          accusantium voluptatibus perspiciatis exercitationem quibusdam libero?
+          Consectetur fuga inventore id. Debitis repudiandae assumenda ut sequi?
+          Incidunt ex quae laborum id magnam quam doloribus? Ducimus nihil illum
+          sunt consectetur rerum voluptas unde aspernatur, debitis voluptate.
+          Placeat atque ab dolore nulla error. Doloribus fugiat sapiente
+          assumenda atque? Ad assumenda numquam expedita. Quia fugit optio fuga.
+          Accusamus minima ipsam et, atque voluptate recusandae amet non
+          similique eius quidem iure totam adipisci delectus rem. Expedita dicta
+          officiis esse illum. Ut aspernatur minus rerum enim. Ad esse expedita
+          voluptatum! Mollitia temporibus eveniet provident labore porro aperiam
+          quae, eos ullam doloremque tempora vel culpa laborum ab? Labore aut
+          non dolorum sequi distinctio in natus fugiat dolore perspiciatis
+          voluptas! Facere aut distinctio amet aspernatur! Obcaecati et animi
+          sapiente. Quibusdam nam sapiente sequi illum nesciunt voluptatum
+          soluta a nulla illo ea, obcaecati consequatur. Beatae a magni eveniet
+          corrupti nisi itaque dignissimos doloremque ipsa laborum? Nostrum, eum
+          a! Sint magni saepe doloremque soluta quis accusantium, dicta sed
+          corporis voluptatibus, ad eveniet deleniti dolores. Odit optio magni
+          aspernatur alias quidem qui, non cupiditate necessitatibus obcaecati
+          possimus corporis sed eum?
+        </p>
+      </div>
+    </main>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
