@@ -20,40 +20,8 @@
         // exposed to all expressions
         isDesktop: true,
         navDrawerOpen: false,
-        navItemsDesktopLeft: [
-          {
-            label: 'Ponuda',
-            href: 'ponuda.html',
-            icon: null,
-          },
-          {
-            label: 'O nama',
-            href: 'o-nama.html',
-            icon: null,
-          },
-          {
-            label: 'Blog',
-            href: 'blog.html',
-            icon: null,
-          },
-        ],
-        navItemsDesktopRight: [
-          {
-            label: 'Kontakt',
-            href: 'kontakt.html',
-            icon: null,
-          },
-          {
-            label: 'Košarica',
-            href: 'košarica.html',
-            icon: null,
-          },
-          {
-            label: 'Profil',
-            href: 'profil.html',
-            icon: null,
-          },
-        ],
+        categoryBarOpen: false,
+        categoryDropdownOpen: false,
         navDrawerItems: [
           {
             label: 'Ponuda',
@@ -86,19 +54,30 @@
         },
         openNavDrawer() {
           this.navDrawerOpen = true;
+          this.categoryDropdownOpen = false;
         },
         closeNavDrawer() {
           this.navDrawerOpen = false;
+          this.categoryDropdownOpen = false;
+        },
+        toggleCategoryBar() {
+          this.categoryBarOpen = !this.categoryBarOpen;
+        },
+        toggleCategoryDropdown() {
+          this.categoryDropdownOpen = !this.categoryDropdownOpen;
         },
       }).mount();
     </script>
   </head>
-  <body @resize.window="console.log" :class="{'no-scrollbar': navDrawerOpen}">
-    <div class="container header__wrapper">
+  <body :class="{'no-scrollbar': navDrawerOpen}">
+    <div
+      class="container header__wrapper"
+      :class="{'full-color': categoryBarOpen}"
+    >
       <div class="row">
         <header class="header">
           <div
-            class="header__hamburger tablet icon__wrapper left"
+            class="header__hamburger icon__wrapper left tablet"
             @click="openNavDrawer"
           >
             <box-icon class="icon" size="md" name="menu-alt-left"></box-icon>
@@ -112,32 +91,74 @@
           </div>
           <nav class="nav desktop">
             <ul class="nav__list nav__list--left">
-              <li
-                class="nav__item"
-                v-for="(item, i) in navItemsDesktopLeft"
-                :key="i"
-              >
-                <a :href="item.href" class="nav__link">{{item.label}}</a>
+              <li class="nav__item">
+                <span class="nav__link" @click="toggleCategoryBar">
+                  Ponuda
+                  <box-icon
+                    class="icon inner-icon"
+                    name="chevron-down-square"
+                  ></box-icon>
+                </span>
+              </li>
+              <li class="nav__item">
+                <a href="o-nama.html" class="nav__link">O nama</a>
+              </li>
+              <li class="nav__item">
+                <a href="blog.html" class="nav__link">Blog</a>
               </li>
             </ul>
             <ul class="nav__list nav__list--right">
-              <li
-                class="nav__item"
-                v-for="(item, i) in navItemsDesktopRight"
-                :key="i"
-              >
-                <a :href="item.href" class="nav__link">{{item.label}}</a>
+              <li class="nav__item"></li>
+              <li class="nav__item">
+                <a href="kontakt.html" class="nav__link">Kontakt</a>
+              </li>
+              <li class="nav__item">
+                <a href="kosarica.html" class="nav__link with-icon">
+                  <box-icon class="icon" name="cart-alt"></box-icon>
+                </a>
+              </li>
+              <li class="nav__item">
+                <a href="profil.html" class="nav__link with-icon">
+                  <box-icon class="icon" name="user-circle"></box-icon>
+                </a>
               </li>
             </ul>
+
+            <div
+              class="nav__category-bar category-bar desktop"
+              v-if="categoryBarOpen"
+            >
+              <div class="row">
+                <nav class="category-bar__nav">
+                  <ul class="category-bar__list">
+                    <li class="category-bar__item">
+                      <a href="#" class="category-bar__link">Kolači</a>
+                    </li>
+                    <li class="category-bar__item">
+                      <a href="#" class="category-bar__link">Torte</a>
+                    </li>
+                    <li class="category-bar__item">
+                      <a href="#" class="category-bar__link">Krosasani</a>
+                    </li>
+                    <li class="category-bar__item">
+                      <a href="#" class="category-bar__link">Sendviči</a>
+                    </li>
+                    <li class="category-bar__item">
+                      <a href="#" class="category-bar__link">Ostalo</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
           </nav>
-          <div class="header__hamburger tablet icon__wrapper right">
-            <a href="/kosarica" class="nav-link-mobile icon__link">
+          <div class="header__hamburger icon__wrapper right tablet">
+            <a href="/kosarica">
               <box-icon class="icon" size="md" name="cart-alt"></box-icon>
             </a>
           </div>
 
-          <div class="nav-drawer tablet container" v-if="navDrawerOpen">
-            <header class="nav-drawer__header">
+          <div class="nav-drawer tablet" v-if="navDrawerOpen">
+            <header class="nav-drawer__header container">
               <div class="icon__wrapper left" @click="closeNavDrawer">
                 <box-icon class="icon" size="md" name="x"></box-icon>
               </div>
@@ -154,16 +175,59 @@
                 </a>
               </div>
             </header>
-            <nav class="nav-drawer__nav">
+            <nav class="nav-drawer__nav container">
               <ul class="nav-drawer__list">
-                <li
-                  class="nav-drawer__item"
-                  v-for="(item, i) in navDrawerItems"
-                  :key="i"
-                >
-                  <a class="nav-drawer__link" :href="item.href"
-                    >{{item.label}}</a
+                <li class="nav-drawer__item">
+                  <span
+                    class="nav-drawer__link"
+                    @click="toggleCategoryDropdown"
                   >
+                    Ponuda
+                    <box-icon
+                      class="icon inner-icon"
+                      size="md"
+                      name="chevron-down-square"
+                    ></box-icon>
+                  </span>
+                  <ul
+                    class="nav-drawer-dropdown__list"
+                    v-if="categoryDropdownOpen"
+                  >
+                    <li class="nav-drawer-dropdown__item">
+                      <a href="#" class="nav-drawer-dropdown__link">
+                        <span class="emoji">🍰️</span> Kolači</a
+                      >
+                    </li>
+                    <li class="nav-drawer-dropdown__item">
+                      <a href="#" class="nav-drawer-dropdown__link">
+                        <span class="emoji">🎂️</span> Torte</a
+                      >
+                    </li>
+                    <li class="nav-drawer-dropdown__item">
+                      <a href="#" class="nav-drawer-dropdown__link">
+                        <span class="emoji">🥐</span> Krosasani
+                      </a>
+                    </li>
+                    <li class="nav-drawer-dropdown__item">
+                      <a href="#" class="nav-drawer-dropdown__link"
+                        ><span class="emoji">🥪️</span> Sendviči</a
+                      >
+                    </li>
+                    <li class="nav-drawer-dropdown__item">
+                      <a href="#" class="nav-drawer-dropdown__link"
+                        ><span class="emoji">🍹️</span> Ostalo</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-drawer__item">
+                  <a href="o-nama.html" class="nav-drawer__link">O nama</a>
+                </li>
+                <li class="nav-drawer__item">
+                  <a href="blog.html" class="nav-drawer__link">Blog</a>
+                </li>
+                <li class="nav-drawer__item">
+                  <a href="kontakt.html" class="nav-drawer__link">Kontakt</a>
                 </li>
               </ul>
               <div class="nav-drawer__user">
@@ -176,7 +240,6 @@
                     class="icon"
                     size="lg"
                     name="user-circle"
-                    type="solid"
                   ></box-icon>
                   Matija Osrečki
                 </a>
