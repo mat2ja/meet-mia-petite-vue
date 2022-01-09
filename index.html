@@ -22,6 +22,7 @@
         navDrawerOpen: false,
         categoryBarOpen: false,
         categoryDropdownOpen: false,
+        offsetLeft: 0,
         navDrawerItems: [
           {
             label: 'Ponuda',
@@ -66,11 +67,31 @@
         toggleCategoryDropdown() {
           this.categoryDropdownOpen = !this.categoryDropdownOpen;
         },
+        calculateRowOffset() {
+          const [row] = [...document.querySelectorAll('.row')];
+          this.offsetLeft = `${row.getBoundingClientRect().left || 0}`;
+
+          const grids = document.querySelectorAll('.product-grid');
+          grids.forEach((grid) => {
+            grid.style.paddingLeft = `calc(${this.offsetLeft}px)`;
+            grid.style.paddingRight = `calc(${this.offsetLeft}px)`;
+          });
+        },
+        runOnMount() {
+          // TODO - doesnt work on first render
+          window.addEventListener('load', (event) => {
+            this.calculateRowOffset();
+          });
+
+          window.addEventListener('resize', this.calculateRowOffset);
+        },
       }).mount();
     </script>
   </head>
+  <!-- TODO: navDrawerOpen || !isMobile -->
   <body :class="{'no-scrollbar': navDrawerOpen}">
     <div
+      @vue:mounted="runOnMount"
       class="container header__wrapper"
       :class="{'full-color': categoryBarOpen}"
     >
@@ -126,7 +147,7 @@
 
             <div
               class="nav__category-bar category-bar desktop"
-              v-if="categoryBarOpen"
+              v-show="categoryBarOpen"
             >
               <div class="row">
                 <nav class="category-bar__nav">
@@ -141,6 +162,7 @@
                       <a href="#" class="category-bar__link">Krosasani</a>
                     </li>
                     <li class="category-bar__item">
+                      <!-- TODO: not clickable becasue of image -->
                       <a href="#" class="category-bar__link">Sendviči</a>
                     </li>
                     <li class="category-bar__item">
@@ -158,7 +180,7 @@
           </div>
 
           <div class="nav-drawer tablet" v-if="navDrawerOpen">
-            <header class="nav-drawer__header container">
+            <header class="nav-drawer__header row">
               <div class="icon__wrapper left" @click="closeNavDrawer">
                 <box-icon class="icon" size="md" name="x"></box-icon>
               </div>
@@ -175,7 +197,7 @@
                 </a>
               </div>
             </header>
-            <nav class="nav-drawer__nav container">
+            <nav class="nav-drawer__nav row">
               <ul class="nav-drawer__list">
                 <li class="nav-drawer__item">
                   <span
@@ -249,57 +271,97 @@
         </header>
       </div>
     </div>
+
     <main class="container main">
-      <div class="row">
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad suscipit
-          repellat incidunt porro minima autem? Eos veritatis voluptas debitis
-          dignissimos quasi sint optio, ipsam impedit nisi, laborum eveniet
-          minima labore. Voluptatibus a animi nihil placeat! Deserunt tenetur
-          tempora consectetur sequi quo consequatur quos quibusdam accusamus.
-          Repudiandae quidem cumque ea vero nostrum non, veritatis officiis rem
-          asperiores quas, animi laudantium aspernatur? Minima maiores excepturi
-          nemo voluptatem recusandae nesciunt exercitationem iusto iste enim ut
-          fugiat, quibusdam reprehenderit ipsa ullam eligendi maxime magnam
-          eveniet Eligendi quas porro voluptatum sequi? Vero ea aperiam minima
-          sequi in sapiente provident quaerat, quibusdam corporis quos quod
-          accusantium eligendi tempore nesciunt explicabo necessitatibus
-          voluptatem culpa asperiores suscipit aspernatur alias! Perspiciatis
-          deleniti repellat molestiae numquam amet. Consequatur, delectus nulla.
-          Quam sed autem enim praesentium! Tempore eveniet quis rem possimus
-          repellendus labore, voluptatibus molestias accusantium perferendis
-          aspernatur temporibus odio neque sed. Neque expedita praesentium quo
-          facilis porro cumque unde blanditiis nihil sapiente totam! Soluta
-          assumenda recusandae, placeat, eligendi tenetur tempora odit nemo et
-          tempore ipsam consectetur asperiores nulla dolores quisquam!
-          Exercitationem! Eum, necessitatibus voluptatibus repellat at impedit,
-          nemo molestiae inventore maxime quasi, minus debitis repudiandae
-          tenetur. Dolor quas perferendis, ullam, nesciunt sit, dolore
-          perspiciatis voluptate officiis hic nemo vel laudantium explicabo!
-          Cupiditate neque nisi quidem, tempore eaque quia a odit illum quaerat
-          porro, commodi beatae rem corrupti, quo asperiores unde eius
-          accusantium voluptatibus perspiciatis exercitationem quibusdam libero?
-          Consectetur fuga inventore id. Debitis repudiandae assumenda ut sequi?
-          Incidunt ex quae laborum id magnam quam doloribus? Ducimus nihil illum
-          sunt consectetur rerum voluptas unde aspernatur, debitis voluptate.
-          Placeat atque ab dolore nulla error. Doloribus fugiat sapiente
-          assumenda atque? Ad assumenda numquam expedita. Quia fugit optio fuga.
-          Accusamus minima ipsam et, atque voluptate recusandae amet non
-          similique eius quidem iure totam adipisci delectus rem. Expedita dicta
-          officiis esse illum. Ut aspernatur minus rerum enim. Ad esse expedita
-          voluptatum! Mollitia temporibus eveniet provident labore porro aperiam
-          quae, eos ullam doloremque tempora vel culpa laborum ab? Labore aut
-          non dolorum sequi distinctio in natus fugiat dolore perspiciatis
-          voluptas! Facere aut distinctio amet aspernatur! Obcaecati et animi
-          sapiente. Quibusdam nam sapiente sequi illum nesciunt voluptatum
-          soluta a nulla illo ea, obcaecati consequatur. Beatae a magni eveniet
-          corrupti nisi itaque dignissimos doloremque ipsa laborum? Nostrum, eum
-          a! Sint magni saepe doloremque soluta quis accusantium, dicta sed
-          corporis voluptatibus, ad eveniet deleniti dolores. Odit optio magni
-          aspernatur alias quidem qui, non cupiditate necessitatibus obcaecati
-          possimus corporis sed eum?
-        </p>
-      </div>
+      <section class="section-hero row">
+        <div class="section-hero__content">
+          <h1 class="section-hero__title">
+            Zemi si tortu
+            <!-- <br /> -->
+            <!-- And eat it too. -->
+          </h1>
+          <div class="section-hero__buttons">
+            <button class="btn btn--primary" @click="calculateOffsetLeft">
+              primary
+            </button>
+            <button class="btn btn--secondary">secondary</button>
+          </div>
+        </div>
+        <div class="section-hero__image">
+          <img src="./assets/images/hero.png" alt="" draggable="false" />
+        </div>
+      </section>
+
+      <section class="section-popular">
+        <div class="title-box row">
+          <box-icon class="icon" name="trending-up"></box-icon>
+          <h2>Popularno ovaj tjedan</h2>
+        </div>
+        <div class="">
+          <!-- TODO: calculate margin of titlebar on resize and put that padding on the grid -->
+          <div class="product-grid">
+            <div class="product-card" v-for="i in 12">
+              <div class="product-card__image">
+                <img src="./assets/images/product-01.avif" alt="" />
+              </div>
+              <div class="product-card__content">
+                <div class="product">
+                  <div class="product__info">
+                    <p class="product__crumbs">small text • 300g</p>
+                    <h5 class="product__name">Salty & Nutty</h5>
+                    <p class="product__description">
+                      Biskviti s lješnjacima, slani karamel, krema od
+                      mascarponea i karamela
+                    </p>
+                  </div>
+                </div>
+                <div class="product__price">
+                  <span class="product__price--currency">HRK</span>
+                  <span class="product__price--amount">22.00</span>
+                </div>
+                <div class="product__buttons">
+                  <button class="btn btn--primary">Dodaj u košaricu</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-offer">
+        <div class="title-box row">
+          <box-icon class="icon" name="discount" type="solid"></box-icon>
+          <h2>Posebna ponuda</h2>
+        </div>
+        <div class="">
+          <div class="product-grid">
+            <div class="product-card" v-for="i in 12">
+              <div class="product-card__image">
+                <img src="./assets/images/product-01.avif" alt="" />
+              </div>
+              <div class="product-card__content">
+                <div class="product">
+                  <div class="product__info">
+                    <p class="product__crumbs">small text • 300g</p>
+                    <h5 class="product__name">Salty & Nutty</h5>
+                    <p class="product__description">
+                      Biskviti s lješnjacima, slani karamel, krema od
+                      mascarponea i karamela
+                    </p>
+                  </div>
+                </div>
+                <div class="product__price">
+                  <span class="product__price--currency">HRK</span>
+                  <span class="product__price--amount">22.00</span>
+                </div>
+                <div class="product__buttons">
+                  <button class="btn btn--primary">Dodaj u košaricu</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script type="module" src="/main.js"></script>
   </body>
