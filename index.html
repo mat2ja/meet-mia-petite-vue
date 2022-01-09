@@ -45,6 +45,34 @@
             icon: null,
           },
         ],
+        categoriesSweet: [
+          {
+            label: 'Kolači',
+            id: 'kolaci',
+          },
+          {
+            label: 'Torte',
+            id: 'torte',
+          },
+          {
+            label: 'Kroasani',
+            id: 'kroasani',
+          },
+        ],
+        categoriesRest: [
+          {
+            label: 'Sendviči',
+            id: 'sendvici',
+          },
+          {
+            label: 'Napitci',
+            id: 'napitci',
+          },
+          {
+            label: 'Cijeja ponuda',
+            id: 'sve',
+          },
+        ],
         // getters
         get plusOne() {
           return this.count + 1;
@@ -297,31 +325,28 @@
           <box-icon class="icon" name="trending-up"></box-icon>
           <h2>Popularno ovaj tjedan</h2>
         </div>
-        <div class="">
-          <!-- TODO: calculate margin of titlebar on resize and put that padding on the grid -->
-          <div class="product-grid">
-            <div class="product-card" v-for="i in 12">
-              <div class="product-card__image">
-                <img src="./assets/images/product-01.avif" alt="" />
+        <div class="product-grid">
+          <div class="product-card" v-for="i in 12">
+            <div class="product-card__image">
+              <img src="./assets/images/product-01.avif" alt="" />
+            </div>
+            <div class="product-card__content">
+              <div class="product">
+                <div class="product__info">
+                  <p class="product__crumbs">small text • 300g</p>
+                  <h5 class="product__name">Salty & Nutty</h5>
+                  <p class="product__description">
+                    Biskviti s lješnjacima, slani karamel, krema od mascarponea
+                    i karamela
+                  </p>
+                </div>
               </div>
-              <div class="product-card__content">
-                <div class="product">
-                  <div class="product__info">
-                    <p class="product__crumbs">small text • 300g</p>
-                    <h5 class="product__name">Salty & Nutty</h5>
-                    <p class="product__description">
-                      Biskviti s lješnjacima, slani karamel, krema od
-                      mascarponea i karamela
-                    </p>
-                  </div>
-                </div>
-                <div class="product__price">
-                  <span class="product__price--currency">HRK</span>
-                  <span class="product__price--amount">22.00</span>
-                </div>
-                <div class="product__buttons">
-                  <button class="btn btn--primary">Dodaj u košaricu</button>
-                </div>
+              <div class="product__price">
+                <span class="product__price--currency">HRK</span>
+                <span class="product__price--amount">22.00</span>
+              </div>
+              <div class="product__buttons">
+                <button class="btn btn--primary">Dodaj u košaricu</button>
               </div>
             </div>
           </div>
@@ -358,6 +383,35 @@
                   <button class="btn btn--primary">Dodaj u košaricu</button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-categories row">
+        <div class="categories__grid">
+          <div class="categories__product-grid">
+            <div
+              class="categories__card category-card"
+              v-for="cat in categoriesSweet"
+              :key="cat.id"
+              :id="`cat-${cat.id}`"
+            >
+              <h4 class="category-card__label">{{cat.label}}</h4>
+            </div>
+          </div>
+          <h3 class="categories__title">SLATKO</h3>
+        </div>
+        <div class="categories__grid reverse">
+          <h3 class="categories__title reverse">SLANO</h3>
+          <div class="categories__product-grid">
+            <div
+              class="categories__card category-card"
+              v-for="cat in categoriesSweet"
+              :key="cat.id"
+              :id="`cat-${cat.id}`"
+            >
+              <h4 class="category-card__label">{{cat.label}}</h4>
             </div>
           </div>
         </div>
