@@ -556,8 +556,8 @@ section {
   gap: 1rem;
   // TODO: odreze sjenu
   overflow-y: visible;
-  // overflow-x: auto;
-  overflow-x: visible;
+  overflow-x: auto;
+  // overflow-x: visible;
   flex-wrap: nowrap;
   transition: padding-left 800ms ease-out;
   margin-left: 0.5rem;
